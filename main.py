@@ -8,30 +8,36 @@ from pybricks.parameters import (Port, Stop, Direction, Button, Color,
 from pybricks.tools import print, wait, StopWatch
 from pybricks.robotics import DriveBase
 
+from ev3dev2.motor import LargeMotor, OUTPUT_A, OUTPUT_B, SpeedPercent, MoveTank
+
 # Outputs = Port.A, Port.B.... etc
 # Inputs = Port.S1, Port.S2... etc
 #  DOcs https://le-www-live-s.legocdn.com/sc/media/files/ev3-micropython/ev3micropythonv100-71d3f28c59a1e766e92a59ff8500818e.pdf
 
 # Write your program here
-SPEED = 1000000
+
+tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
+
+# drive in a turn for 5 rotations of the outer motor
+# the first two parameters can be unit classes or percentages.
+
+# drive in a different turn for 3 seconds
+
 brick.sound.beep()
-left_motor = Motor(Port.B)
-right_motor = Motor(Port.C)
 
 wheel_diameter = 56
 axle_track = 114
 
-robot = DriveBase(left_motor, right_motor, wheel_diameter, axle_track)
-c_sensor = ColorSensor(Port.S1)
+c_sensor = ColorSensor(Port.S2)
 last_ambient = 2000
 while True:
     c = c_sensor.color()
     a = c_sensor.ambient()
-    print(a,c == Color.WHITE)
+    print(a, c == Color.WHITE)
     if c == Color.WHITE and a > 1:
         if a < last_ambient:
-            robot.drive(SPEED, 666)
-        robot.drive(SPEED,0)
-        last_ambient = a
+            tank_drive.on_for_seconds(
+                SpeedPercent(100), SpeedPercent(75), 0.1)
     else:
-        robot.stop()
+        tank_drive.on_for_seconds(SpeedPercent(-30), SpeedPercent(30), 0.1)
+    last_ambient = a
