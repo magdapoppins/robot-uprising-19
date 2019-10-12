@@ -10,7 +10,7 @@ from ev3dev2.motor import LargeMotor, MediumMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C,
 # Write your program here
 class Movement:
 
-    def __init__(self, motor1, motor2, us_port, c_port):
+    def __init__(self, motor1, motor2, us_port=None, c_port=None):
         self.tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
         self.us = UltrasonicSensor(us_port)
         self.colorSensor = ColorSensor(c_port)
@@ -24,6 +24,12 @@ class Movement:
         # Turn 90 degrees right
         # TODO: random numbers, test and change
         self.tank_drive.on_for_seconds(SpeedPercent(50), SpeedPercent(-50), 5)
+
+    def free_move(self, left, right):
+        self.tank_drive.on(left, right)
+
+    def stop(self):
+        self.tank_drive.stop()
 
     def driveUntilColorAppears(colorToFind):
         # Drive forward until white line appears

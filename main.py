@@ -53,7 +53,8 @@ class Main(Thread):
             #boxzone = BoxZone(Port.S2, OUTPUT_A, OUTPUT_B, OUTPUT_C)
 
 
-Main()
-Controller()
+main_thread = Main()
+Controller(main_thread)
+
 while True:
     pass
