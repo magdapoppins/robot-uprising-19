@@ -14,6 +14,6 @@ class Controller(Thread):
     def run(self):
         for event in self.gamepad.read_loop():
             logging.info('controller input:')
-            logging.info('type: ', event.type)
-            logging.info('code: ', event.code)
+            logging.info('type: {}'.format(event.type))
+            logging.info('code: {}'.format(event.code))
             logging.info('---')

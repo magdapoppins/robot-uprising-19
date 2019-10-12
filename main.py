@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C
-from ev3dev2.sensor import INPUT_1, INPUT_2
+from ev3dev2.sensor import INPUT_3, INPUT_2
 
 from roina import Claw, Movement, Controller, LineFollower, BoxZone, BM
 import sys
@@ -27,9 +27,11 @@ class Main(Thread):
         bm = BM()
         bm.beep()
         while not theEnd:
-            move = Movement(OUTPUT_A, OUTPUT_B, INPUT_1, INPUT_2)
+            move = Movement(OUTPUT_A, OUTPUT_B, INPUT_3, INPUT_2)
             # pre-stuff: close claws for usb stick
             grabber = Claw(OUTPUT_C)
+            # if grabber not up already
+            grabber.up()
             grabber.up()
 
             # first section MAZE
