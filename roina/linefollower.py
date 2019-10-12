@@ -2,7 +2,6 @@ from pybricks.ev3devices import ColorSensor
 from pybricks.parameters import Color
 from ev3dev2.motor import MoveTank
 
-
 class LineFollower:
     def __init__(self, port, a, b):
         self.colorSensor = ColorSensor(port)
