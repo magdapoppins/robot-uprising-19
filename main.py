@@ -30,7 +30,6 @@ class Main(Thread):
             # pre-stuff: close claws for usb stick
             grabber = Claw(OUTPUT_C)
             grabber.up()
-            grabber.down()
 
             # first section MAZE
             follower = LineFollower(INPUT_2, OUTPUT_A, OUTPUT_B)

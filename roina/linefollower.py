@@ -10,7 +10,6 @@ class LineFollower:
       self.motor_left = LargeMotor(OUTPUT_B)
 
     def followLine(self):
-      turnDegree = 0
       color = self.colorSensor.color
       # https://subscription.packtpub.com/book/hardware_and_creative/9781849519748/1/ch01lvl1sec11/proportional-line-follower-advanced
       # The base speed of the robot is controlled by a constant value
@@ -37,29 +36,25 @@ class LineFollower:
           reflectionOnRight = 0
           for i in range(5):
             self.tank_drive.on_for_seconds(-30, 30, 0.1)
-            reflectionOnRight = self.colorSensor.reflected_light_intensity
+            reflectionOnRight += self.colorSensor.reflected_light_intensity
           # move
           if reflectionOnLeft > reflectionOnRight:
-            self.tank_drive.on_for_seconds(20, -20, 0.8)
+            self.tank_drive.on_for_seconds(20, -20, 0.6)
           if reflectionOnRight > reflectionOnLeft:
-            self.tank_drive.on_for_seconds(-20, 20, 0.4)
+            self.tank_drive.on_for_seconds(-20, 20, 0.2)
           self.tank_drive.on(20, 20)
 
-        lightSensorReflectionValue = self.colorSensor.reflected_light_intensity
-        logging.info('lightSensorReflectionValue', lightSensorReflectionValue)
-        color = self.colorSensor.color
-        logging.info('color', color)
-        # speed - gain x (LightSensor - DesiredValue)
-        motorRightPower = speed - gain * (lightSensorReflectionValue-desiredValue)
-        logging.info('motorRightPower',motorRightPower)
-        # speed + gain x (LightSensor - DesiredValue)
-        motorLeftPower = speed + gain * (lightSensorReflectionValue-desiredValue)
-        logging.info('motorLeftPower',motorLeftPower)
+        # lightSensorReflectionValue = self.colorSensor.reflected_light_intensity
+        # logging.info('lightSensorReflectionValue', lightSensorReflectionValue)
+        # color = self.colorSensor.color
+        # logging.info('color', color)
+        # # speed - gain x (LightSensor - DesiredValue)
+        # motorRightPower = speed - gain * (lightSensorReflectionValue-desiredValue)
+        # logging.info('motorRightPower',motorRightPower)
+        # # speed + gain x (LightSensor - DesiredValue)
+        # motorLeftPower = speed + gain * (lightSensorReflectionValue-desiredValue)
+        # logging.info('motorLeftPower',motorLeftPower)
 
-        if (color != ColorSensor.COLOR_WHITE):
-          turnDegree += 1
-        else:
-          turnDegree = 0
 
         #self.motor_right.on_for_rotations(motorRightPower, 0.1)
         #self.motor_left.on_for_rotations(motorLeftPower, 0.1)
