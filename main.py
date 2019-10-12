@@ -24,20 +24,36 @@ tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
 # drive in a different turn for 3 seconds
 
 brick.sound.beep()
+areas = ["FOLLOW_LINE", "PRESS_BTN", "FOREST"]
 
 wheel_diameter = 56
 axle_track = 114
 
+area = areas[0]
+
 c_sensor = ColorSensor(Port.S2)
 last_ambient = 2000
+
+
 while True:
     c = c_sensor.color()
-    a = c_sensor.ambient()
-    print(a, c == Color.WHITE)
-    if c == Color.WHITE and a > 1:
-        if a < last_ambient:
-            tank_drive.on_for_seconds(
-                SpeedPercent(100), SpeedPercent(75), 0.1)
-    else:
+    if c == Color.RED:
+        area = areas[areas.index[area] + 1]
         tank_drive.on_for_seconds(SpeedPercent(-30), SpeedPercent(30), 0.1)
-    last_ambient = a
+
+    if area == areas[0]:
+        c = c_sensor.color()
+        a = c_sensor.ambient()
+        print(a, c == Color.WHITE)
+        if c == Color.WHITE and a > 1:
+            if a < last_ambient:
+                tank_drive.on_for_seconds(
+                    SpeedPercent(100), SpeedPercent(75), 0.1)
+        else:
+            tank_drive.on_for_seconds(SpeedPercent(-20), SpeedPercent(20), 0.1)
+        last_ambient = a
+    elif area == areas[1]:
+        print("asd")
+    elif area == areas[2]:
+        print("asd")
+        
