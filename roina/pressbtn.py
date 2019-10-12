@@ -1,15 +1,15 @@
 from pybricks.ev3devices import (ColorSensor, UltrasonicSensor)
 from pybricks.parameters import Color
 from ev3dev2.motor import MoveTank
-import claw
-import movement
+from roina import Claw
+from roina import Movement
 
 class PressButton:
   def __init__(self, c_port, us_port, a, b, c):
     self.colorSensor = ColorSensor(port)
     self.tank_drive = MoveTank(a, b)
-    self.grabber = claw(c)
-    self.move = movement(a, b, us_port, c_port)
+    self.grabber = Claw(c)
+    self.move = Movement(a, b, us_port, c_port)
 
   # 1. Press red button on the corner
   # 2. Go up the ramp

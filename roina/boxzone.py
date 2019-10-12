@@ -1,12 +1,12 @@
 from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.motor import MoveTank
-import claw
+from roina import Claw
 
 class BoxZone:
   def __init__(self, c_port, a, b, c):
     self.colorSensor = ColorSensor(c_port)
     self.tank_drive = MoveTank(a, b)
-    self.grabber = claw(c)
+    self.grabber = Claw(c)
     self.move = movement(a, b)
   
   def boxZone():

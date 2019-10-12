@@ -2,14 +2,14 @@ from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.motor import MoveTank
 
 class LineFollower:
-    def __init__(self, port, a, b):
-        self.colorSensor = ColorSensor(port)
-        self.tank_drive = MoveTank(a, b)
+    def __init__(self, c_port, a, b):
+      self.colorSensor = ColorSensor(c_port)
+      self.tank_drive = MoveTank(a, b)
 
-    def followLine():
+    def followLine(self):
       turnDegree = 0
-      lightSensorReflectionValue self.colorSensor.reflection()
-      color = self.colorSensor.color()
+      lightSensorReflectionValue = self.colorSensor.reflected_light_intensity
+      color = self.colorSensor.color
       # https://subscription.packtpub.com/book/hardware_and_creative/9781849519748/1/ch01lvl1sec11/proportional-line-follower-advanced
       # The base speed of the robot is controlled by a constant value
       speed = 20
@@ -18,10 +18,10 @@ class LineFollower:
       # This difference is multiplied by a gain factor, which for the optical proportional line follower will probably be between 0 and 1. In this program, I chose a gain of 0.7.
       gain = 0.9
 
-      while color != ColorSendoer.COLOR_RED:
-        lightSensorReflectionValue = self.colorSensor.reflection()
+      while color != self.colorSensor.COLOR_RED:
+        lightSensorReflectionValue = self.colorSensor.reflected_light_intensity
         print('lightSensorReflectionValue', lightSensorReflectionValue)
-        color = self.colorSensor.color()
+        color = self.colorSensor.color
         print('color', color)
         # speed - gain x (LightSensor - DesiredValue)
         motorRightPower = speed - gain * (lightSensorReflectionValue-desiredValue)
@@ -36,7 +36,7 @@ class LineFollower:
           turnDegree = 0
 
         # If no white on sight for some time, change turning direction
-        if turnDegree > 20:
+        if turnDegree > 50:
           # speed - gain x (LightSensor - DesiredValue)
           motorRightPower = speed + gain * (lightSensorReflectionValue-desiredValue)
           print('motorRightPower',motorRightPower)
@@ -44,4 +44,4 @@ class LineFollower:
           motorLeftPower = speed - gain * (lightSensorReflectionValue-desiredValue)
           print('motorLeftPower',motorLeftPower)
 
-        self.tank_drive.on_for_seconds(SpeedPercent(motorLeftPower), SpeedPercent(motorRightPower), 0.1)
+        self.tank_drive.on_for_seconds(motorLeftPower, motorRightPower, 0.1)

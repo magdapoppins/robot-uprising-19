@@ -13,7 +13,7 @@ class Movement:
     def __init__(self, motor1, motor2, us_port, c_port):
         self.tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
         self.us = UltrasonicSensor(us_port)
-        self.colorSensor = ColorSensor(port)
+        self.colorSensor = ColorSensor(c_port)
 
     def turnLeft():
         # Turn 90 degrees left
