@@ -3,8 +3,8 @@ from ev3dev2.motor import MoveTank
 import claw
 
 class BoxZone:
-  def __init__(self, port, a, b, c):
-    self.colorSensor = ColorSensor(port)
+  def __init__(self, c_port, a, b, c):
+    self.colorSensor = ColorSensor(c_port)
     self.tank_drive = MoveTank(a, b)
     self.grabber = claw(c)
     self.move = movement(a, b)

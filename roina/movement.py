@@ -8,8 +8,6 @@ from ev3dev2.motor import LargeMotor, MediumMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C,
 #  DOcs https://le-www-live-s.legocdn.com/sc/media/files/ev3-micropython/ev3micropythonv100-71d3f28c59a1e766e92a59ff8500818e.pdf
 
 # Write your program here
-
-
 class Movement:
 
     def __init__(self, motor1, motor2, us_port, c_port):
@@ -34,6 +32,13 @@ class Movement:
             color = self.colorSensor.color()
             self.tank_drive.on_for_seconds(
                 SpeedPercent(100), SpeedPercent(100), 0.2)
+
+    def driveUntilColorEnds(colorToFollow):
+      # Drive forward until white line appears
+      color = self.colorSensor.color()
+      while color == colorToFollow:
+        color = self.colorSensor.color()
+        self.tank_drive.on_for_seconds(SpeedPercent(100), SpeedPercent(100), 0.2)
 
     def driveUntilWallAhead():
         distance = self.us.value()
