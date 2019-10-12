@@ -14,6 +14,7 @@ from threading import Thread
 
 # Write your program here
 
+logging.getLogger().setLevel(logging.INFO)
 
 class Main(Thread):
     def __init__(self):

@@ -19,8 +19,6 @@ class LineFollower:
       # This difference is multiplied by a gain factor, which for the optical proportional line follower will probably be between 0 and 1.
       gain = 0.8
 
-      print("ASDSADADASDASASDADASDAS", flush=True)
-
       self.tank_drive.on(20, 20)
       while color != self.colorSensor.COLOR_RED:
         color = self.colorSensor.color
@@ -29,19 +27,20 @@ class LineFollower:
           # check your left
           reflectionOnLeft = 0
           for i in range(5):
-            self.tank_drive.on_for_seconds(30, -30, 0.1)
+            self.tank_drive.on_for_seconds(20, -20, 0.1)
             reflectionOnLeft += self.colorSensor.reflected_light_intensity
-          self.tank_drive.on_for_seconds(-30, 30, 0.3)
+          self.tank_drive.on_for_seconds(-20, 20, 0.3)
           # check your right
           reflectionOnRight = 0
           for i in range(5):
-            self.tank_drive.on_for_seconds(-30, 30, 0.1)
+            self.tank_drive.on_for_seconds(-20, 20, 0.1)
             reflectionOnRight += self.colorSensor.reflected_light_intensity
           # move
+          logging.info("reflectionOnLeft", reflectionOnLeft, "reflectionOnRight", reflectionOnRight)
           if reflectionOnLeft > reflectionOnRight:
-            self.tank_drive.on_for_seconds(20, -20, 0.6)
+            self.tank_drive.on_for_seconds(20, -20, 0.7)
           if reflectionOnRight > reflectionOnLeft:
-            self.tank_drive.on_for_seconds(-20, 20, 0.2)
+            self.tank_drive.on_for_seconds(-20, 20, 0.3)
           self.tank_drive.on(20, 20)
 
         # lightSensorReflectionValue = self.colorSensor.reflected_light_intensity
@@ -54,8 +53,6 @@ class LineFollower:
         # # speed + gain x (LightSensor - DesiredValue)
         # motorLeftPower = speed + gain * (lightSensorReflectionValue-desiredValue)
         # logging.info('motorLeftPower',motorLeftPower)
-
-
         #self.motor_right.on_for_rotations(motorRightPower, 0.1)
         #self.motor_left.on_for_rotations(motorLeftPower, 0.1)
         #self.tank_drive.on_for_seconds(motorRightPower, motorLeftPower, 0.1)
