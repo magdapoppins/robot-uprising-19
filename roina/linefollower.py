@@ -16,7 +16,7 @@ class LineFollower:
       # You will need to determine a desired light sensor value for the robot to track on. You can either read the light sensor reading directly on your EV3 brick, or look at the panel on the lower-right hand corner of your screen. You should see all of the motors and sensors that are currently plugged into your brick.
       desiredValue = 49 # white value on race = 49
       # This difference is multiplied by a gain factor, which for the optical proportional line follower will probably be between 0 and 1. In this program, I chose a gain of 0.7.
-      gain = 0.9
+      gain = 0.8
 
       while color != self.colorSensor.COLOR_RED:
         lightSensorReflectionValue = self.colorSensor.reflected_light_intensity
@@ -36,7 +36,7 @@ class LineFollower:
           turnDegree = 0
 
         # If no white on sight for some time, change turning direction
-        if turnDegree > 50:
+        if turnDegree > 90:
           # speed - gain x (LightSensor - DesiredValue)
           motorRightPower = speed + gain * (lightSensorReflectionValue-desiredValue)
           print('motorRightPower',motorRightPower)

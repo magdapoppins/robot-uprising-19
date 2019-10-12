@@ -20,17 +20,16 @@ class Main(Thread):
         self.start()
 
     def run(self):
-        brick.sound.beep()
-        theEnd = false
+        theEnd = False
         while not theEnd:
-            move = Movement(OUTPUT_A, OUTPUT_B, Port.S3, Port.S2)
+            move = Movement(OUTPUT_A, OUTPUT_B, INPUT_1, INPUT_2)
             # pre-stuff: close claws for usb stick
             grabber = Claw(OUTPUT_C)
             grabber.up()
             grabber.down()
 
             # first section MAZE
-            follower = Linefollower(Port.S2, Port.S3, OUTPUT_A, OUTPUT_B)
+            follower = LineFollower(INPUT_2, OUTPUT_A, OUTPUT_B)
             follower.followLine()
 
             # go to next section
