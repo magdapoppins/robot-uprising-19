@@ -10,11 +10,11 @@ from roina import claw, movement, linefollower
 
 # Write your program here
 
-move = movement(OUTPUT_A, OUTPUT_B)
+move = movement(OUTPUT_A, OUTPUT_B, Port.S3, Port.S2)
 
 grabber = claw(OUTPUT_C)
 
-follower = linefollower(Port.S2, OUTPUT_A, OUTPUT_B) 
+follower = linefollower(Port.S2, Port.S3, OUTPUT_A, OUTPUT_B, OUTPUT_C) 
 
 move.move()
 
