@@ -22,6 +22,14 @@ class Movement:
     def __init__(self, motor1, motor2):
         self.tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
 
+    def turnLeft():
+        # Turn 90 degrees left 
+        self.tank_drive.on_for_seconds(SpeedPercent(-50), SpeedPercent(50), 5) # TODO: random numbers, test and change
+
+    def turnRight():
+        # Turn 90 degrees right
+        self.tank_drive.on_for_seconds(SpeedPercent(50), SpeedPercent(-50), 5) # TODO: random numbers, test and change
+
     def move_line(self):
         tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
 
