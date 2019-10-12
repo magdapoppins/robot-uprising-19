@@ -22,7 +22,7 @@ tank_drive = MoveTank(OUTPUT_A, OUTPUT_B)
 # the first two parameters can be unit classes or percentages.
 
 # drive in a different turn for 3 seconds
-
+brick.light(Color.RED)
 brick.sound.beep()
 areas = ["PARKING", "SPINNERS", "FOREST", "BOXZONE", "PRESS_BTN", "MAZE"]
 area = areas.pop()
