@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C
-<<<<<<< HEAD
-from roina import Claw, Movement, Controller, Linefollower
+from roina import Claw, Movement, Controller, Linefollower, BoxZone
 import sys
 import logging
-=======
-from pybricks.parameters import (Port)
-from roina import claw, movement, linefollower, pressbtn, boxzone
->>>>>>> Add sections to main
 
 # Outputs = Port.A, Port.B.... etc
 # Inputs = Port.S1, Port.S2... etc
@@ -18,13 +13,13 @@ from roina import claw, movement, linefollower, pressbtn, boxzone
 brick.sound.beep()
 theEnd = false
 while not theEnd:
-  move = movement(OUTPUT_A, OUTPUT_B, Port.S3, Port.S2)
+  move = Movement(OUTPUT_A, OUTPUT_B, Port.S3, Port.S2)
   # pre-stuff: close claws for usb stick
-  grabber = claw(OUTPUT_C)
+  grabber = Claw(OUTPUT_C)
   grabber.down()
 
   # first section MAZE
-  follower = linefollower(Port.S2, Port.S3, OUTPUT_A, OUTPUT_B) 
+  follower = Linefollower(Port.S2, Port.S3, OUTPUT_A, OUTPUT_B) 
   follower.followLine()
 
   # go to next section
@@ -38,17 +33,4 @@ while not theEnd:
   move.driveUntilColorEnds(Color.RED)
 
   # third section BOXZONE
-  boxZone = boxzone(Port.S2, OUTPUT_A, OUTPUT_B, OUTPUT_C)
-
-# move = movement(OUTPUT_A, OUTPUT_B, Port.S3, Port.S2)
-
-# grabber = claw(OUTPUT_C)
-
-# follower = linefollower(Port.S2, Port.S3, OUTPUT_A, OUTPUT_B, OUTPUT_C) 
-
-# move.move()
-
-# grabber.up()
-# grabber.down()
-
-# follower.followLine()
+  boxzone = BoxZone(Port.S2, OUTPUT_A, OUTPUT_B, OUTPUT_C)
