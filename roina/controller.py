@@ -5,7 +5,6 @@ import logging
 CONTROL_MAPPING = {
     'L1': 310,
     'R1': 311,
-    'CROSS': 304,
     'SQUARE': 308,
     'TRIANGLE': 307,
     'CIRCLE': 305,
@@ -18,59 +17,82 @@ class MovementThread(Thread):
         self.daemon = True
         self.stopped = False
         self.movement = movement
-        self.left_speed = 0
-        self.right_speed = 0
+        self.speed = 0
+        self.x_axis = 0
 
     def stop(self):
         self.movement.stop()
+        self.stopped = True
+
+    def start(self):
+        self.movement.stop()
+        self.stopped = True
 
     def run(self):
         print(self.side, "wheel is ready")
         while self.work:
-            self.motor.on(duty_cycle_sp=self.speed)
+            if not self.stopped:
+                left = speed + (x_axis * self.speed)
+                right = speed - (x_axis * self.speed)
+                self.movement.free_move(left, right)
 
         self.movement.stop()
 
 
 class Controller(Thread):
-    def __init__(self, movement):
+    def __init__(self, movement, main_thread):
         Thread.__init__(self)
         self.daemon = True
         self.devices = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
         self.gamepad = evdev.InputDevice(self.devices[0].fn)
+
         self.buttons = {
-            304: None,
+            304: self.cross_fn,
             308: None,
             307: None,
             305: None,
             310: None,
             311: None,
         }
+
+        self.main_thread = main_thread
+
+        self.moving = True
         self.movement_thread = MovementThread(movement)
 
-    def set_button(self):
-        self.start()
+    def cross_fn(self):
+        if self.moving:
+            self.moving = False
+            self.movement_thread.stop()
+            self.main_thread.start()
+        else:
+            self.main_thread.stop()
+            self.movement_thread.start()
+            self.movement = True
 
-    def run(self):
+    def listen(self):
         self.start()
 
     def run(self):
         for event in self.gamepad.read_loop():
-            if event.type == 3:
+
+            if event.type == 1:
+                logging.info(event.code)
+                code_fn = buttons.get(event.code, None)
+                if code_fn:
+                    code_fn()
+
+            elif event.type == 3 and self.moving:
                 if event.code == 5:  # right stick Y
-                    self.movement.free_move(left_speed, right_speed)
+                    logging.info(event.value)
+                    val = float(event.value) / 255 * 200 - 100
+                    self.movement.free_move(val)
 
                 if event.code == 0:  # left stick X
+                    logging.info(event.value)
                     if event.value > 133:
-                        r_motor_thread.pause = True
+                        self.movement_thread.x_axis = 1
                     elif event.value < 122:
-                        l_motor_thread.pause = True
+                        self.movement_thread.x_axis = -1
                     else:
-                        l_motor_thread.pause = False
-                        r_motor_thread.pause = False
-            elif event.type == 1:
-
-            logging.info('controller input:')
-            logging.info('type: {}'.format(event.type))
-            logging.info('code: {}'.format(event.code))
-            logging.info('---')
+                        self.movement_thread.x_axis = 0
