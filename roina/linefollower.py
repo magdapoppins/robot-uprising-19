@@ -8,29 +8,37 @@ class LineFollower:
       self.tank_drive = MoveTank(a, b)
       self.us = UltrasonicSensor(us_port)
 
+    def checkWhiteLine(self):
+      # reflection white on maze about 40
+      # reflection grey on maze about 8
+      color = self.colorSensor.color
+      reflection = self.colorSensor.reflected_light_intensity
+      logging.info('color: {}, reflection: {}'.format(color, reflection))
+      if color == self.colorSensor.COLOR_WHITE and reflection > 30:
+        return True
+      else:
+        return False
+
     def followLine(self):
       # Drive forward until white line appears
-      color = self.colorSensor.color
       distance = self.us.value()
-      logging.info('distance: {}, color {}'.format(distance, color))
+      logging.info('distance: {}, whiteLine {}'.format(distance, self.checkWhiteLine()))
       wallFound = False
-      while distance > 50 and color != self.colorSensor.COLOR_WHITE:
+      while distance > 50 and not self.checkWhiteLine():
         self.tank_drive.on(25, 25)
         if wallFound:
           # scouting for white line
           # turn left
           for i in range(10):
             self.tank_drive.on_for_seconds(30, -15, 0.1)
-            color = self.colorSensor.color
-            if color == self.colorSensor.COLOR_WHITE:
+            if self.checkWhiteLine():
               break
           # back to original direction
-          self.tank_drive.on_for_seconds(-15, 30, 0.4)
+          self.tank_drive.on_for_seconds(-15, 30, 0.3)
           # turn right
           for i in range(5):
             self.tank_drive.on_for_seconds(-15, 30, 0.1)
-            color = self.colorSensor.color
-            if color == self.colorSensor.COLOR_WHITE:
+            if self.checkWhiteLine():
               break
           # back to original direction
           self.tank_drive.on_for_seconds(30, -15, 0.2)
@@ -42,11 +50,9 @@ class LineFollower:
           wallFound = True
           for i in range(10):
             self.tank_drive.on_for_seconds(30, -15, 0.2)
-            color = self.colorSensor.color
-            if color == self.colorSensor.COLOR_WHITE:
+            if self.checkWhiteLine():
               break
 
-        color = self.colorSensor.color
         distance = self.us.value()
 
       color = self.colorSensor.color
