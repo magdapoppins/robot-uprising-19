@@ -43,7 +43,7 @@ class LineFollower:
           # back to original direction
           self.tank_drive.on_for_seconds(30, -15, 0.2)
           # DRIVE
-          self.tank_drive.on_for_seconds(15, 15, 0.5)
+          self.tank_drive.on_for_seconds(15, 15, 1)
 
         if (distance < 100):
           # turn left
