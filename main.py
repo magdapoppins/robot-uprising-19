@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C
-from roina import Claw, Movement, Controller
+from roina import Claw, Movement, Controller, Linefollower
 import sys
 import logging
 
@@ -11,11 +11,11 @@ import logging
 
 # Write your program here
 
-move = Movement(OUTPUT_A, OUTPUT_B)
+move = Movement(OUTPUT_A, OUTPUT_B, Port.S3, Port.S2)
 
 grabber = Claw(OUTPUT_C)
 
-# follower = linefollower(Port.S2, OUTPUT_A, OUTPUT_B)
+follower = Linefollower(Port.S2, Port.S3, OUTPUT_A, OUTPUT_B, OUTPUT_C) 
 
 move.move()
 

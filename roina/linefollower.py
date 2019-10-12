@@ -1,7 +1,5 @@
-from pybricks.ev3devices import ColorSensor
-from pybricks.parameters import Color
+from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.motor import MoveTank
-
 
 class LineFollower:
     def __init__(self, port, a, b):
@@ -20,7 +18,7 @@ class LineFollower:
       # This difference is multiplied by a gain factor, which for the optical proportional line follower will probably be between 0 and 1. In this program, I chose a gain of 0.7.
       gain = 0.9
 
-      while color != Color.RED:
+      while color != ColorSendoer.COLOR_RED:
         lightSensorReflectionValue = self.colorSensor.reflection()
         print('lightSensorReflectionValue', lightSensorReflectionValue)
         color = self.colorSensor.color()
@@ -32,7 +30,7 @@ class LineFollower:
         motorLeftPower = speed + gain * (lightSensorReflectionValue-desiredValue)
         print('motorLeftPower',motorLeftPower)
 
-        if (color != Color.White):
+        if (color != ColorSensor.COLOR_WHITE):
           turnDegree += 1
         else:
           turnDegree = 0
