@@ -1,7 +1,8 @@
 #!/usr/bin/env pybricks-micropython
 
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C
-from roina import claw, movement
+from pybricks.parameters import (Port)
+from roina import claw, movement, linefollower
 
 # Outputs = Port.A, Port.B.... etc
 # Inputs = Port.S1, Port.S2... etc
@@ -13,6 +14,11 @@ move = movement(OUTPUT_A, OUTPUT_B)
 
 grabber = claw(OUTPUT_C)
 
+follower = linefollower(Port.S2, OUTPUT_A, OUTPUT_B) 
+
 move.move()
 
 grabber.up()
+grabber.down()
+
+follower.followLine()
