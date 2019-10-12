@@ -1,2 +1,3 @@
-from .movement import movement
-from .claw import claw
+from .movement import Movement
+from .claw import Claw
+from .controller import Controller
