@@ -49,22 +49,16 @@ class Main(Thread):
                 follower.followLine()
 
                 # go to next section
-                # move.driveUntilColorEnds(Color.RED)
+                move.driveUntilColorEnds(Color.RED)
 
                 # second section PRESS_BTN
-                # pressButton = pressbtn(
-                #    Port.S2, Port.S3, OUTPUT_A, OUTPUT_B, OUTPUT_C)
-                # pressButton.pressButton()
+                pressButton = pressbtn(INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B, OUTPUT_C)
+                pressButton.pressButton()
 
                 # go to next section
                 # move.driveUntilColorEnds(Color.RED)
 
-                # third section BOXZONE
-                #boxzone = BoxZone(Port.S2, OUTPUT_A, OUTPUT_B, OUTPUT_C)
-
-
 move = Movement(OUTPUT_A, OUTPUT_B, INPUT_3, INPUT_2)
-
 main_thread = Main()
 
 ## botin bluetooth service kuoli kokonaan, mutta ei varmaan toimis muutenkaan
