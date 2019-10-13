@@ -1,7 +1,8 @@
 from ev3dev2.sensor.lego import ColorSensor, UltrasonicSensor
-from ev3dev2.motor import MoveTank, LargeMotor, OUTPUT_A, OUTPUT_B
+from ev3dev2.motor import MoveTank, LargeMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C
 import logging
 import time
+from .claw import Claw
 
 class LineFollower:
     def __init__(self, c_port, us_port, a, b):
@@ -67,6 +68,9 @@ class LineFollower:
         elif color == self.colorSensor.COLOR_YELLOW:
           # go a little forward, then back and turn left
           self.tank_drive.on_for_seconds(60, 60, 0.5)
+          claw = Claw(OUTPUT_C)
+          claw.down()
+          claw.up()
           self.tank_drive.on_for_seconds(-60, -60, 1.5)
           self.tank_drive.on_for_seconds(60, -60, 0.7)
           time.sleep(5)
