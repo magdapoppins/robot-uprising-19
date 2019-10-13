@@ -16,54 +16,39 @@ from threading import Thread
 
 logging.getLogger().setLevel(logging.INFO)
 
-
 class Main(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.daemon = True
-        self.stopped = False
         self.start()
-
-    def stop(self):
-        self.stopped = True
-
-    def start(self):
-        self.stopped = False
 
     def run(self):
         theEnd = False
         bm = BM()
         bm.beep()
         while not theEnd:
-            # if thread is not paused
-            if not stopped:
-                move = Movement(OUTPUT_A, OUTPUT_B, INPUT_3, INPUT_2)
-                # pre-stuff: close claws for usb stick
-                grabber = Claw(OUTPUT_C)
-                # if grabber not up already
-                # grabber.up()
-                # grabber.up()
+            move = Movement(OUTPUT_A, OUTPUT_B, INPUT_3, INPUT_2)
+            # if grabber not up already
+            #grabber.up()
+            #grabber.up()
 
-                # first section MAZE
-                follower = LineFollower(INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B)
-                follower.followLine()
+            # first section MAZE
+            follower = LineFollower(INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B)
+            follower.followLine()
 
-                # go to next section
-                move.driveUntilColorEnds(Color.RED)
+            # second section PRESS_BTN
+            pressButton = pressbtn(
+                INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B, OUTPUT_C)
+            pressButton.pressButton()
 
-                # second section PRESS_BTN
-                pressButton = pressbtn(INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B, OUTPUT_C)
-                pressButton.pressButton()
+            # go to next section
+            # move.driveUntilColorEnds(Color.RED)
 
-                # go to next section
-                # move.driveUntilColorEnds(Color.RED)
+            # third section BOXZONE
+            #boxzone = BoxZone(Port.S2, OUTPUT_A, OUTPUT_B, OUTPUT_C)
 
-move = Movement(OUTPUT_A, OUTPUT_B, INPUT_3, INPUT_2)
-main_thread = Main()
 
-## botin bluetooth service kuoli kokonaan, mutta ei varmaan toimis muutenkaan
-# controller = Controller(move, main_thread)
-# controller.listen()
-
+Main()
+#Controller()
 while True:
     pass

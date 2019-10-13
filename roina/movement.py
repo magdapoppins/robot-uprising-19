@@ -40,11 +40,11 @@ class Movement:
                 SpeedPercent(100), SpeedPercent(100), 0.2)
 
     def driveUntilColorEnds(colorToFollow):
-      # Drive forward until white line appears
-      color = self.colorSensor.color()
+      # Drive forward until some color line appears
+      color = self.colorSensor.color
       while color == colorToFollow:
-        color = self.colorSensor.color()
-        self.tank_drive.on_for_seconds(SpeedPercent(100), SpeedPercent(100), 0.2)
+        color = self.colorSensor.color
+        self.tank_drive.on(50, 50)
 
     def driveUntilWallAhead():
         distance = self.us.value()

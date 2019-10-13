@@ -75,8 +75,8 @@ class LineFollower:
           self.tank_drive.on(60, -30)
       
       if color == self.colorSensor.COLOR_RED: # go to next section
-        self.tank_drive.on_for_seconds(60, 60, 0.5)
-        break
-
-
-
+        # go to next section: drive forward until red color ends
+        color = self.colorSensor.color
+        while color == self.colorSensor.COLOR_RED:
+          self.tank_drive.on(50, 50)
+          color = self.colorSensor.color
