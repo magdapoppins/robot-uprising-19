@@ -3,7 +3,7 @@
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C
 from ev3dev2.sensor import INPUT_3, INPUT_2
 
-from roina import Claw, Movement, Controller, LineFollower, BoxZone, BM
+from roina import Claw, Movement, Controller, LineFollower, BoxZone, BM, PressBtn
 import sys
 import logging
 from threading import Thread
@@ -37,9 +37,9 @@ class Main(Thread):
             follower.followLine()
 
             # second section PRESS_BTN
-            pressButton = pressbtn(
-                INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B, OUTPUT_C)
-            pressButton.pressButton()
+            #pressButton = pressbtn(
+            #    INPUT_2, OUTPUT_A, OUTPUT_B, OUTPUT_C)
+            #pressButton.pressButton()
 
             # go to next section
             # move.driveUntilColorEnds(Color.RED)
