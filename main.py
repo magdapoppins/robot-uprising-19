@@ -3,7 +3,7 @@
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, OUTPUT_C
 from ev3dev2.sensor import INPUT_3, INPUT_2
 
-from roina import Claw, Movement, Controller, LineFollower, BoxZone, BM, PressBtn
+from roina import Claw, Movement, Controller, LineFollower, BoxZone, BM, PressButton
 import sys
 import logging
 from threading import Thread
@@ -33,11 +33,11 @@ class Main(Thread):
             #grabber.up()
 
             # first section MAZE
-            follower = LineFollower(INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B)
+            follower = LineFollower(INPUT_2, INPUT_3, OUTPUT_A, OUTPUT_B, OUTPUT_C)
             follower.followLine()
 
             # second section PRESS_BTN
-            #pressButton = pressbtn(
+            # pressButton = PressButton(
             #    INPUT_2, OUTPUT_A, OUTPUT_B, OUTPUT_C)
             #pressButton.pressButton()
 

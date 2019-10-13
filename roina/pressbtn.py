@@ -10,11 +10,8 @@ class PressButton:
     self.move = Movement(a, b, us_port, c_port)
 
   # 1. Press red button on the corner
-  # 2. Go up the ramp
-  # 3. Go to the hole and drop the USB stick there
-  # 4. Go back down
-  # BONUS: Press yellow button
-  # 5. Täysii forward to the next section
+  # 2. Press the yellow button
+  # 3. Go to the next section
   def pressButton():
       self.move.driveUntilColorAppears(Color.White)
       self.move.turnRight()

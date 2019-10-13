@@ -1,14 +1,16 @@
 from ev3dev2.sensor.lego import ColorSensor, UltrasonicSensor
-from ev3dev2.motor import MoveTank, LargeMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C
+from ev3dev2.motor import MoveTank, LargeMotor
 import logging
 import time
-from .claw import Claw
+from roina import Claw
 
 class LineFollower:
-    def __init__(self, c_port, us_port, a, b):
+    def __init__(self, c_port, us_port, a, b, c):
       self.colorSensor = ColorSensor(c_port)
       self.tank_drive = MoveTank(a, b)
       self.us = UltrasonicSensor(us_port)
+      self.claw = Claw(c)
+
 
     def checkWhiteLine(self):
       # reflection white on maze about 40
@@ -68,9 +70,12 @@ class LineFollower:
         elif color == self.colorSensor.COLOR_YELLOW:
           # go a little forward, then back and turn left
           self.tank_drive.on_for_seconds(60, 60, 0.5)
-          claw = Claw(OUTPUT_C)
-          claw.down()
-          claw.up()
+          self.claw.down()
+          self.claw.down()
+          self.claw.down()
+          self.claw.up()
+          self.claw.up()
+          self.claw.up()
           self.tank_drive.on_for_seconds(-60, -60, 1.5)
           self.tank_drive.on_for_seconds(60, -60, 0.7)
           time.sleep(5)
